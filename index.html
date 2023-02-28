@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 
 <body>
   <div class="container">
-    <div class="calc-container">
+    <div class="calc-container hide">
       <h2>Calculadora de IMC</h2>
       <form id="imc-form">
         <div class="form-inputs">
@@ -34,9 +34,9 @@
         </div>
       </form>
     </div>
-    <div id="result-container">
-      <p id="imc-number">Seu IMC: <span></span></p>
-      <p id="imc-info">Situação atual: <span></span></p>
+    <div id="result-container" class="result-container">
+      <p id="imc-number">Seu IMC: <span class="good">25</span></p>
+      <p id="imc-info">Situação atual: <span class="good">Magreza</span></p>
       <h3>Confira as classificações:</h3>
       <div id="imc-table">
         <div class="table-header">
@@ -44,8 +44,13 @@
           <h4>Classificação</h4>
           <h4>Obesidade</h4>
         </div>
+        <div class="table-data">
+          <p>Menor que 18,5</p>
+          <p>Magreza</p>
+          <p>0</p>
+        </div>
       </div>
-      <button id="back-btn">Voltar</button>
+      <button id="back-btn" class="back-btn">Voltar</button>
     </div>
   </div>
 </body>
