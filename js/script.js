@@ -47,19 +47,18 @@ const clearBtn = document.querySelector("#clear-btn");
 const imcNumber = document.querySelector("#imc-number span");
 const imcInfo = document.querySelector("#imc-info span");
 const backBtn = document.querySelector("#back-btn");
-const calcContainer = document.querySelector(".calc-container")
+const calcContainer = document.querySelector(".calc-container");
 const resultContainer = document.querySelector(".result-container");
 
-
 // Funções
-function createTable(data){
+function createTable(data) {
   data.forEach((item) => {
     const div = document.createElement("div");
     div.classList.add("table-data");
 
     const classification = document.createElement("p");
     classification.innerText = item.classification;
-    
+
     const info = document.createElement("p");
     info.innerText = item.info;
 
@@ -76,21 +75,23 @@ function createTable(data){
   });
 }
 
-function cleanInputs(){
+function cleanInputs() {
   heightInput.value = "";
   weightInput.value = "";
+  imcNumber.classList = "";
+  imcInfo.classList = "";
 }
 
-function validDigits(text){
+function validDigits(text) {
   return text.replace(/[^0-9,]/g, "");
 }
 
-function calcImc(weight, height){
-  const imc = (weight / (height ** 2)).toFixed(1);
+function calcImc(weight, height) {
+  const imc = (weight / height ** 2).toFixed(1);
   return imc;
 }
 
-function showOrHideResults(){
+function showOrHideResults() {
   calcContainer.classList.toggle("hide");
   resultContainer.classList.toggle("hide");
 }
@@ -100,11 +101,11 @@ createTable(data);
 
 // Eventos
 [heightInput, weightInput].forEach((el) => {
-  el.addEventListener("input", (e) =>{
+  el.addEventListener("input", (e) => {
     const updatedValue = validDigits(e.target.value);
     e.target.value = updatedValue;
   });
-})
+});
 
 calcBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -115,29 +116,52 @@ calcBtn.addEventListener("click", (e) => {
   if (!weight || !height) return;
 
   const imc = calcImc(weight, height);
-  
+
   let info;
 
   data.forEach((item) => {
-    if (imc >= item.min && imc <= item.max){
+    if (imc >= item.min && imc <= item.max) {
       info = item.info;
     }
-  })
+  });
 
   if (!info) return;
 
   imcNumber.innerText = imc;
   imcInfo.innerText = info;
 
+  switch (info) {
+    case "Magreza":
+      imcNumber.classList.add("low");
+      imcInfo.classList.add("low");
+      break;
+    case "Normal":
+      imcNumber.classList.add("good");
+      imcInfo.classList.add("good");
+      break;
+    case "Sobrepeso":
+      imcNumber.classList.add("low");
+      imcInfo.classList.add("low");
+      break;
+    case "Obesidade":
+      imcNumber.classList.add("medium");
+      imcInfo.classList.add("medium");
+      break;
+    case "Obesidade grave":
+      imcNumber.classList.add("high");
+      imcInfo.classList.add("high");
+      break;
+  }
+
   showOrHideResults();
-})
+});
 
 clearBtn.addEventListener("click", (e) => {
   e.preventDefault(); // evita envio do formulário
   cleanInputs();
-})
+});
 
 backBtn.addEventListener("click", () => {
   cleanInputs();
   showOrHideResults();
-})
+});
