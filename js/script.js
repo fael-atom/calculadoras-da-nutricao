@@ -45,7 +45,6 @@ const weightInput = document.querySelector("#weight");
 const calcBtn = document.querySelector("#calc-btn");
 const clearBtn = document.querySelector("#clear-btn");
 
-
 // Funções
 function createTable(data){
   data.forEach((item) => {
@@ -80,6 +79,11 @@ function validDigits(text){
   return text.replace(/[^0-9,]/g, "");
 }
 
+function calcImc(weight, height){
+  const imc = (weight / (height ** 2)).toFixed(1);
+  return imc;
+}
+
 // Inicialização
 createTable(data);
 
@@ -89,6 +93,27 @@ createTable(data);
     const updatedValue = validDigits(e.target.value);
     e.target.value = updatedValue;
   });
+})
+
+calcBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  const weight = +weightInput.value.replace(",", ".");
+  const height = +heightInput.value.replace(",", ".");
+  console.log(weight, height);
+
+  if (!weight || !height) return;
+
+  const imc = calcImc(weight, height);
+  
+  let info;
+
+  data.forEach((item) => {
+    if (imc >= item.min && imc <= item.max){
+      info = item.info;
+    }
+  })
+  console.log(info);
+  if (!info) return;
 })
 
 clearBtn.addEventListener("click", (e) => {
